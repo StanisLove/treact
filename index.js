@@ -1,6 +1,39 @@
-import fetchRepos, { ROOT_URL as GITHUB_URL, getReposUrl }  from '~/src/github';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import fetchRepos from '~/src/github';
 
-console.log(GITHUB_URL);
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-fetchRepos()
-  .then((repos) => console.log(repos));
+    this.state = { repos: [] };
+  }
+
+  componentDidMount() {
+    fetchRepos()
+      .then((repos) => {
+        this.setState({ repos }); // { repos: repos }
+      })
+  }
+
+  render() {
+    const { repos } = this.state;
+
+    return (
+      <div>
+        <ul>
+          {
+            repos.map((repo) => (
+              <li>{repo}</li>
+            ))
+          }
+        </ul>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
