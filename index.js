@@ -1,39 +1,20 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => (
+  <div>Hello, world!</div>
+);
 
-    this.state = { repos: [] };
-  }
-
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
-
-  render() {
-    const { repos } = this.state;
-
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+console.log(App());
 
 ReactDOM.render(
-  <App />,
+  {
+    $$typeof: Symbol.for('react.element'),
+    props: {
+      children: 'Hello, world!'
+    },
+    type: 'div',
+    ref: null
+  },
   document.getElementById('root')
 );
