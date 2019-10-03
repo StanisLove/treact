@@ -1,39 +1,26 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
+const express = require('express');
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+require('@babel/register');
+require('@babel/polyfill');
 
-    this.state = { repos: [] };
-  }
+const render = require('./render').default;
 
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
+const app = express();
 
-  render() {
-    const { repos } = this.state;
+app.get('/', async (req, res) => {
+  const response = `
+    <!doctype html>
+    <html>
+      <head>
+        <title>Hello, React!</title>
+      </head>
+      <body>
+        <div id="root">${await render()}</div>
+      </body>
+    </html>
+  `;
 
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+  res.send(response);
+});
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+app.listen(3001, () => console.log('Server is listening on 3001')); // port and callback
