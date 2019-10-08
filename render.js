@@ -7,7 +7,7 @@ import getRepos from './src/github';
 const render = async () => {
   const repos = await getRepos();
 
-  return ReactDOMServer.renderToString(<App props={repos} />);
+  return ReactDOMServer.renderToString(<App repos={ repos } />);
 };
 
 export default render;
