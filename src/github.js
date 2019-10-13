@@ -6,7 +6,9 @@ export const getReposUrl = (company) => `/orgs/${company}/repos`;
 const fetchRepos = () => (
   request
   .get(`${ROOT_URL}${getReposUrl('facebook')}`)
+  .set('User-Agent', 'React')
   .then((response) => response.body.map((repo) => repo.name))
+  .catch((error) => console.log(error))
 );
 
 export default fetchRepos;
