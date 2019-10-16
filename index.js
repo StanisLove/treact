@@ -1,39 +1,29 @@
-import React, { Component } from 'react';
+import React, { Children } from 'react';
 import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const Segment = ({ children, color, dashed }) => (
+  <div style={{ border: `1px ${dashed ? 'dashed' : 'solid'} ${color}` }}>
+    {
+      Children.map(
+        children,
+        (child, key) => (
+        <div key={key} style={{ border: '1px solid red' }}>
+          {child}
+        </div>
+      ))
+    }
+  </div>
+);
 
-    this.state = { repos: [] };
-  }
-
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
-
-  render() {
-    const { repos } = this.state;
-
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+Segment.defaultProps = {
+  color: 'blue'
+};
 
 ReactDOM.render(
-  <App />,
+  <Segment color={undefined} dashed>
+    <div> div 1 </div>
+    <div> div 2 </div>
+    { () => <div> div 3 </div> }
+  </Segment>,
   document.getElementById('root')
 );
