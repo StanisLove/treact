@@ -1,39 +1,31 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
+import bowser from 'bowser';
+import Catalog from '~/src/Catalog';
+import browserContext from './browserContext';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const getBrowser = () => (
+  bowser.getParser(window.navigator.userAgent)
+);
 
-    this.state = { repos: [] };
-  }
-
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
-
-  render() {
-    const { repos } = this.state;
-
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+console.log(getBrowser().getPlatform().type);
 
 ReactDOM.render(
-  <App />,
+  <browserContext.Provider value={getBrowser()}>
+    <Catalog
+      products = {[
+        {
+          key: 1,
+          title: 'iPhone',
+          price: 200
+        },
+        {
+          key: 2,
+          title: 'macBook',
+          price: 400
+        },
+      ]}
+    />
+  </browserContext.Provider>,
   document.getElementById('root')
 );
