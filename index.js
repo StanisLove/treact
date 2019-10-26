@@ -1,37 +1,19 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { repos: [] };
-  }
-
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
-
-  render() {
-    const { repos } = this.state;
-
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <Switch>
+      <Route path='/' exact strict render={() => <div>Main page</div>} />
+      <Route path='/about' render={() => <div>About page</div>} />
+      <Route exact path='/products' render={() => <div>Products page</div>} />
+      <Route path='/products/:id' render={({ match }) => (
+        <div>Product #{match.params.id}</div>
+      )} />
+    </Switch>
+  </Router>
+);
 
 ReactDOM.render(
   <App />,
