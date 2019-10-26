@@ -3,16 +3,20 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   mainPath, aboutPath, catalogPath, productPath
-} from '~/helpers/routes';
+} from '~/src/helpers/routes';
+import ProductPage from '~/src/components/views/Product';
+import AboutPage   from '~/src/components/views/About';
+import MainPage    from '~/src/components/views/Main';
+import CatalogPage from '~/src/components/views/Catalog';
 
 const App = () => (
   <Router>
     <Switch>
-      <Route path={mainPath()} exact strict render={() => <div>Main page</div>} />
-      <Route path={aboutPath()} render={() => <div>About page</div>} />
-      <Route exact path={catalogPath()} render={() => <div>Products page</div>} />
+      <Route path={mainPath()}    component={MainPage} exact strict />
+      <Route path={aboutPath()}   component={AboutPage} />
+      <Route path={catalogPath()} component={CatalogPage} exact />
       <Route path={productPath()} render={({ match }) => (
-        <div>Product #{match.params.id}</div>
+        <ProductPage id={match.params.id} />
       )} />
     </Switch>
   </Router>
