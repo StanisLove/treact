@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  mainPath, aboutPath, catalogPath, productPath
+} from '~/helpers/routes';
 
 const App = () => (
   <Router>
     <Switch>
-      <Route path='/' exact strict render={() => <div>Main page</div>} />
-      <Route path='/about' render={() => <div>About page</div>} />
-      <Route exact path='/products' render={() => <div>Products page</div>} />
-      <Route path='/products/:id' render={({ match }) => (
+      <Route path={mainPath()} exact strict render={() => <div>Main page</div>} />
+      <Route path={aboutPath()} render={() => <div>About page</div>} />
+      <Route exact path={catalogPath()} render={() => <div>Products page</div>} />
+      <Route path={productPath()} render={({ match }) => (
         <div>Product #{match.params.id}</div>
       )} />
     </Switch>
