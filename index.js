@@ -1,37 +1,32 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
+import {
+  BrowserRouter as Router, Route, Switch, NavLink
+} from 'react-router-dom';
+import './index.css';
+import {
+  mainPath, aboutPath, catalogPath, productPath
+} from '~/src/helpers/routes';
+import routes from '~/src/routes';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const RouteWithSubroutes = (route, key) => (
+  <Route key={key} {...route} />
+);
 
-    this.state = { repos: [] };
-  }
-
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
-
-  render() {
-    const { repos } = this.state;
-
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <Fragment>
+      <ul>
+        <li><NavLink to={mainPath()} exact>Main</NavLink></li>
+        <li><NavLink to={aboutPath()}>About</NavLink></li>
+        <li><NavLink to={catalogPath()}>Catalog</NavLink></li>
+      </ul>
+      <Switch>
+        {routes.map((route, key) => RouteWithSubroutes(route, key))}
+      </Switch>
+    </Fragment>
+  </Router>
+);
 
 ReactDOM.render(
   <App />,
