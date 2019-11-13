@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import fetchRepos from '~/src/github';
-import './Modal.css';
+import Modal from './Modal';
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +35,6 @@ class App extends Component {
 }
 
 ReactDOM.render(
-  <App />,
+  <Modal />,
   document.getElementById('root')
 );
