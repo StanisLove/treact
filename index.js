@@ -17,3 +17,12 @@ const arr2 = [later(1000), later(2000)];
 Promise
   .all(arr)
   .then((resultArray) => console.log('all done', resultArray));
+
+// not worked in this env
+const foo = async () => {
+  const result = await later(1000);
+
+  console.log(result);
+}
+
+// foo();
