@@ -1,39 +1,28 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import fetchRepos from '~/src/github';
+import later from './Delay';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+later('1000')
+  .then(() => {
+    console.log('Done');
+  })
+  .catch((e) => console.log('error', e))
 
-    this.state = { repos: [] };
-  }
+const arr = [later(1000), later(2000)];
 
-  componentDidMount() {
-    fetchRepos()
-      .then((repos) => {
-        this.setState({ repos }); // { repos: repos }
-      })
-  }
+Promise
+  .all(arr)
+  .then(() => console.log('all done'));
 
-  render() {
-    const { repos } = this.state;
+const arr2 = [later(1000), later(2000)];
 
-    return (
-      <div>
-        <ul>
-          {
-            repos.map((repo) => (
-              <li>{repo}</li>
-            ))
-          }
-        </ul>
-      </div>
-    );
-  }
+Promise
+  .all(arr)
+  .then((resultArray) => console.log('all done', resultArray));
+
+// not worked in this env
+const foo = async () => {
+  const result = await later(1000);
+
+  console.log(result);
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+// foo();
