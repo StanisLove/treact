@@ -7,7 +7,7 @@ import { apiUrl, spaceId, accessToken, environmentId } from '~/apiConstants';
 class CatalogPage extends Component {
   constructor(props) {
     super(props);
-    this.stat = { entries: [] };
+    this.state = { items: [] };
   }
 
   componentDidMount() {
@@ -15,12 +15,25 @@ class CatalogPage extends Component {
       .get(`${apiUrl}/spaces/${spaceId}/environments/${environmentId}/entries`)
       .query({'content_type': 'product'})
       .set('Authorization', `Bearer ${accessToken}`)
-      .then((res) => console.log(res.body));
+      .then(({ body: { items } }) => {
+        this.setState({ items })
+      });
   }
 
   render() {
     return(
-      <p>Products</p>
+      <div>
+        <p>Products</p>
+        <ul>
+          {
+            this.state.items.map(
+              (item, index) => (
+                <li key={index}>{item.fields.name}</li>
+              )
+            )
+          }
+        </ul>
+    </div>
     );
   }
 }
