@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class childApp extends Component {
+class ChildApp extends Component {
   constructor(props) {
     console.log('child', 'constructor');
     super(props);
@@ -16,18 +16,27 @@ class childApp extends Component {
     return null;
   }
 
-  getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) {
     console.log('child', 'getDerivedStateFromProps', props, state);
     return state;
   }
 
-  shouldComponentUpdate() {
-    console.log('child', this.shouldComponentUpdate);
+  shouldComponentUpdate(props, state) {
+    console.log('child', 'shouldComponentUpdate', props, state);
     return true;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('child', 'componentDidUpdate', prevProps, prevState, snapshot);
+  }
+
+  render() {
+    console.log('child render');
+    return (
+      <div>
+        <p>Wild child</p>
+      </div>
+    );
   }
 }
 
@@ -66,7 +75,7 @@ class App extends Component {
     return (
       <div>
         <button onClick={() =>this.setState({ stateProp: 'newValue' }) } />
-        { /* <ChildApp stateProp={this.state.stateProp} /> */ }
+        <ChildApp stateProp={this.state.stateProp} />
       </div>
     );
   }
