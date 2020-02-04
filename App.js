@@ -47,20 +47,20 @@ class App extends Component {
     return null;
   }
 
-  getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) {
     console.log('getDerivedStateFromProps', props, state);
-    return state;
+    return state; // Can return null, or any value
   }
 
-  shouldComponentUpdate() {
-    console.log(this.shouldComponentUpdate);
-    return true;
+  shouldComponentUpdate(props, state) {
+    console.log('shouldComponentUpdate', props, state);
+    return true; // Important to return true
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('componentDidUpdate', prevProps, prevState, snapshot);
   }
-}
+
   render() {
     console.log('render');
     return (
@@ -71,3 +71,5 @@ class App extends Component {
     );
   }
 }
+
+export default App;
