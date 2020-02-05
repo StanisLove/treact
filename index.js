@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Chart from './Chart';
+import Form from './Form';
 
 ReactDOM.render(
-  <Chart />,
+  <Form />,
   document.getElementById('root')
 );
